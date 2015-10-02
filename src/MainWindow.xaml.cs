@@ -30,7 +30,7 @@ namespace IRC_Sharp
         }
 
         /// <summary>
-        /// Test method for setting up a connection. See documentation at http://smartirc4net.meebey.net/docs/0.4.0/html/
+        /// Test method for setting up a connection. Just sits there until disconnected for inactivity See documentation at http://smartirc4net.meebey.net/docs/0.4.0/html/
         /// </summary>
         private void SetupTestConnection()
         {
