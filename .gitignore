@@ -185,3 +185,4 @@ $RECYCLE.BIN/
 
 #Ignore dependency DLLs
 Meebey.SmartIrc4net.dll
+StarkSoftProxy.dll

@@ -1,7 +1,7 @@
-You need one dependency to compile this project. (right now)
+You need two dependencies to compile this project. (right now)
 
 https://github.com/meebey/SmartIrc4net
 
-Clone this project, open it in visual studio, build it for release and dump the "Meebey.SmartIrc4net.dll" DLL in here. NOTE: You don't need the starksoftproxy.dll.
+Clone this project, open it in visual studio, build it for release and dump "Meebey.SmartIrc4net.dll" and "StarkSoftProxy.dll" in here.
 
-In the IRC-Sharp project, it might find the DLL automagically. If not, point a reference to it (you'll probably have to browse for it)
+In the IRC-Sharp project, it might find the DLLs automagically. If not, point references to them (you'll probably have to browse for them)
