@@ -47,8 +47,7 @@ namespace IRC_Sharp
             irc.WriteLine(Rfc2812.Nick("RFCSharp"), Priority.Critical);
             irc.WriteLine(Rfc2812.User("RFCSharp", 0, "ImaTest"), Priority.Critical);
             irc.WriteLine(Rfc2812.Join(channel));
-
-            irc.Listen(); //Block main thread till we get something back
+            irc.Listen(); //Block main thread till we get something back. NOTE: This blocks the UI thread, so no window will show up.
         }
     }
 }
