@@ -17,17 +17,17 @@ namespace IRC_Sharp
     {
         /*
         * If you need something to be globally accessible, instantiate it here.
-        * NOTE: Only use this when necessary. This keeps objects in memory. It's useful for the IRC Connection because we will want this accessible at all times.
+        * NOTE: Only use this when necessary. This keeps objects in memory and could impact performance. It's useful for the IRC Connection because we will want this accessible at all times.
         */
-        private IrcConnection f_Irc;
-        public IrcConnection Irc
+        private IRC f_Irc;
+        public IRC Irc
         {
             get
             {
                 if (f_Irc == null)
                 {
                     //create new instance
-                    f_Irc = new IrcConnection();
+                    f_Irc = new IRC();
                 }
                 return f_Irc;
             }

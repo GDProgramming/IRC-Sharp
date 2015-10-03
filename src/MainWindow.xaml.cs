@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,29 +27,51 @@ namespace IRC_Sharp
         public MainWindow()
         {
             InitializeComponent();
-            
-            SetupTestConnection();
-        }
 
-        /// <summary>
-        /// Test method for setting up a connection. Just sits there until disconnected for inactivity See documentation at http://smartirc4net.meebey.net/docs/0.4.0/html/
-        /// </summary>
-        private void SetupTestConnection()
-        {
+            IRC irc = ((App)Application.Current).Irc; //get irc instance
 
-            //Fetch the IRC connection from our main application.
-            IrcConnection irc = ((App)Application.Current).Irc;
-
-            string server = "irc.freenode.net";
+            string serverUrl = "irc.freenode.net";
             int port = 6667;
+
             string channel = "#IRCSharpTest";
 
-            //initialise IRC settings
-            irc.Connect(server, port);
-            irc.WriteLine(Rfc2812.Nick("RFCSharp"), Priority.Critical);
-            irc.WriteLine(Rfc2812.User("RFCSharp", 0, "ImaTest"), Priority.Critical);
-            irc.WriteLine(Rfc2812.Join(channel));
-            irc.Listen(); //Block main thread till we get something back. NOTE: This blocks the UI thread, so no window will show up.
+            irc.Client.OnConnected += (sender, args) =>
+            {
+                lblConnected.Content = "Connected to " + serverUrl;
+
+                irc.Client.Login("IRCSharp", "IRCSharp", 0, "IrcSharp");
+                irc.Client.RfcJoin(channel);
+
+                irc.StartListenerThread();
+            };
+
+            irc.Client.OnChannelMessage += new IrcEventHandler(OnChannelMessage);
+            irc.Client.OnQueryMessage += new IrcEventHandler(OnQueryMessage);
+
+            try
+            {
+                irc.Client.Connect(serverUrl, port);
+            } catch (Exception e)
+            {
+                lblConnected.Content = "Error! Failed to connect: " + e.Message;
+            }
+            
+        }
+
+        void OnChannelMessage(object sender, IrcEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() => 
+            {
+                lblMessage.Content = string.Format("{0}:\n({1}) <{2}> {3}", e.Data.Type, e.Data.Channel, e.Data.Nick, @e.Data.Message);
+            }));
+        }
+
+        void OnQueryMessage(object sender, IrcEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                lblMessage.Content = string.Format("{0}:\n(private) <{1}> {2}", e.Data.Type, e.Data.Nick, @e.Data.Message);
+            }));
         }
     }
 }
