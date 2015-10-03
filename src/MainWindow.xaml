@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:IRC_Sharp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Irc-Sharp" Height="700" Width="1050">
     <Grid>
-        
+        <Label x:Name="lblConnected" Content="Not Connected" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblMessage" Content="---" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.488,1.438"/>
+
     </Grid>
 </Window>
